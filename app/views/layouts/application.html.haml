@@ -1,0 +1,27 @@
+!!! 5
+%html
+%head
+	%title Pin Board
+	= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+	= javascript_include_tag 'application', 'data-turbolinks-track' => true
+	= csrf_meta_tags
+%body
+	%nav.navbar.navbar-default
+		.container
+			- if user_signed_in?
+				.navbar-brand= link_to "Home", pins_path
+				.navbar-brand= link_to "mypins", "pins/mypins"
+				= form_tag(pins_path, :method => "get") do
+					= text_field_tag :search, params[:search], placeholder: "Search Pins", class: "search-form"
+					= submit_tag "Search", { class: "btn btn-primary" }
+				%ul.nav.navbar-nav.navbar-right
+					%li= link_to "New Pin", new_pin_path
+					%li= link_to "Account", edit_user_registration_path
+					%li= link_to "Sign out", destroy_user_session_path, method: :delete
+			
+					
+	.container
+		- flash.each do |name, msg|
+			= content_tag :div, msg, class: "alert alert-info"
+			
+	= yield

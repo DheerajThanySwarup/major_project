@@ -1,0 +1,9 @@
+#pins.transitions-enabled
+	- @pins.each do |pin|
+		- if current_user = pin.user_id
+			.box.panel.panel-default
+				= link_to "Download", pin.attachment_url
+				.panel-body
+					%h2= pin.tag
+					%br/
+					%h2= pin.description
